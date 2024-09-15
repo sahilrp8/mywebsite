@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="https://t4.ftcdn.net/jpg/03/92/81/95/240_F_392819571_O8ktn5YYgUS0nRNpBjrfeVdFMWPfK6SZ.jpg" />
+  <title>Mood Booster</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Styling */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #fbc2eb, #a6c0fe);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+      width: 320px;
+      font-family: 'Raleway', sans-serif;
+      position: relative;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2.5em;
+      color: #e84393;
+      font-weight: 700;
+    }
+
+    #mood-emoji {
+      font-size: 5em;
+      margin-bottom: 20px;
+    }
+
+    #affirmation {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    button {
+      background: #ff6b6b;
+      border: none;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      transition: background 0.3s ease, transform 0.3s ease;
+      margin: 5px;
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Raleway', sans-serif;
+    }
+
+    button:hover {
+      background: #e8495f;
+      transform: scale(1.05);
+    }
+
+    button:active {
+      background: #d43f4f;
+    }
+
+    button img {
+      vertical-align: middle;
+      width: 24px;
+      height: 24px;
+      margin-right: 8px;
+    }
+
+    /* New Tooltip Icon Styling */
+    .info-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #ff6b6b;
+      transition: transform 0.3s ease;
+    }
+
+    .info-icon:hover {
+      transform: scale(1.2);
+    }
+
+    /* Tooltip Message Box Styling */
+    .tooltip-box {
+      display: none;
+      background: #ff6b6b;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      position: absolute;
+      top: 50px;
+      right: 15px;
+      font-size: 1em;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .tooltip-box:after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      border-width: 0 10px 10px;
+      border-style: solid;
+      border-color: transparent transparent #ff6b6b;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Mood Booster 💖</h1>
+    <div id="mood-emoji">😊</div>
+    <div id="affirmation">Click the button for some positivity!</div>
+    <button id="new-affirmation">
+      ✨ Get New Affirmation
+    </button>
+    <button id="play-sound">
+      ▶️ Play Your Favourite Sound
+    </button>
+    <audio id="soothing-sound" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" preload="auto"></audio>
+
+    <!-- Info Icon with Tooltip -->
+    <div class="info-icon" id="info-icon">ℹ️</div>
+    <div class="tooltip-box" id="tooltip-box">🎁 Surprise! You're amazing! 💖 Keep shining bright! 🌟</div>
+  </div>
+
+  <script>
+    // JavaScript Functionality
+    const affirmations = [
+      "You light up every room you enter!",
+      "Your presence makes a difference.",
+      "You are a beacon of hope and strength.",
+      "You have the power to shape your destiny.",
+      "Your kindness is a gift to everyone around you.",
+      "You are worthy of all the good things life has to offer.",
+      "Your creativity knows no bounds.",
+      "You have the courage to pursue your dreams.",
+      "You are a source of inspiration for others.",
+      "Every challenge you face makes you stronger.",
+      "Your smile is a reminder of how beautiful life can be.",
+      "You are a unique and valuable person.",
+      "You have the ability to create positive change.",
+      "Your inner beauty shines brightly.",
+      "You are a wonderful friend and confidant.",
+      "Your positive energy is contagious.",
+      "You have the strength to overcome any obstacle.",
+      "Your heart is full of compassion and love.",
+      "You are a masterpiece in progress.",
+      "Your presence brings joy to those around you."
+    ];
+
+    const emojis = ["😊", "😄", "🤗", "🌟", "💖"];
+
+    function getRandomItem(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+
+    document.getElementById('new-affirmation').addEventListener('click', function() {
+      document.getElementById('affirmation').innerText = getRandomItem(affirmations);
+      document.getElementById('mood-emoji').innerText = getRandomItem(emojis);
+    });
+
+    document.getElementById('play-sound').addEventListener('click', function() {
+      const audio = document.getElementById('soothing-sound');
+      if (audio.paused) {
+        audio.play();
+        this.innerHTML = '⏸️ Pause Favourite Sound';
+      } else {
+        audio.pause();
+        this.innerHTML = '▶️ Play Favourite Sound';
+      }
+    });
+
+    // Tooltip Functionality
+    const infoIcon = document.getElementById('info-icon');
+    const tooltipBox = document.getElementById('tooltip-box');
+
+    infoIcon.addEventListener('click', function() {
+      if (tooltipBox.style.display === 'none' || tooltipBox.style.display === '') {
+        tooltipBox.style.display = 'block';
+      } else {
+        tooltipBox.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
